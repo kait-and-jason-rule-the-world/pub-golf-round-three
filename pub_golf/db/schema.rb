@@ -15,6 +15,35 @@ ActiveRecord::Schema.define(version: 20170504183111) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "events", force: :cascade do |t|
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "bar_name"
+    t.string   "par"
+    t.string   "bogey"
+    t.string   "birdie"
+    t.string   "eagle"
+    t.string   "hole_in_one"
+    t.string   "global_rules"
+  end
+
+  create_table "personal_scorecards", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "events_id"
+    t.integer  "scorecards_id"
+    t.integer  "your_score"
+    t.index ["events_id"], name: "index_personal_scorecards_on_events_id", using: :btree
+    t.index ["scorecards_id"], name: "index_personal_scorecards_on_scorecards_id", using: :btree
+  end
+
+  create_table "scorecards", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "bar_name"
+    t.integer  "par"
+  end
+  
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -30,6 +59,7 @@ ActiveRecord::Schema.define(version: 20170504183111) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
   end
 
 end
